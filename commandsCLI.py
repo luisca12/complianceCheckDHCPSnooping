@@ -39,6 +39,7 @@ def complCheck(validIPs, username, netDevice):
 
     for validDeviceIP in validIPs:
         missingConfig1 = False
+        deviceConfigured = False
         try:
             validDeviceIP = validDeviceIP.strip()
             currentNetDevice = {
@@ -171,12 +172,18 @@ def complCheck(validIPs, username, netDevice):
                                 print(f"INFO: Interface {interface} has configured {snoopGenIntConfig} on device {validDeviceIP}")
                                 authLog.info(f"Interface {interface} has configured {snoopGenIntConfig} on device {validDeviceIP}")
                                 missingConfig1 = False
+                                deviceConfigured = True
                     
                     if missingConfig1 == True:
                         with open('missingDHCP_Configuration.csv', mode='a', newline='') as file:
                             writer = csv.writer(file)
                             writer.writerow([validDeviceIP])
                         continue
+
+                    if deviceConfigured == True:
+                        with open('configuredDevices_DHCPSnooping.csv', mode='a', newline='') as file:
+                            writer = csv.writer(file)
+                            writer.writerow([validDeviceIP])
                     
                     print(f"Outputs and files successfully created for device {validDeviceIP}.\n")
                     print("For any erros or logs please check Logs -> authLog.txt\n")
