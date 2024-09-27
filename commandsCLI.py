@@ -193,11 +193,14 @@ def complCheck(validIPs, username, netDevice):
                     print(f"ERROR: An error occurred: {error}\n", traceback.format_exc())
                     authLog.error(f"User {username} connected to {validDeviceIP} got an error: {error}")
                     authLog.error(traceback.format_exc(),"\n")
-                    os.system("PAUSE")
+                    with open(f"failedDevices.txt","a") as failedDevices:
+                        failedDevices.write(f"User {username} connected to {validDeviceIP} got an error.\n{error}\n")
+                        failedDevices.write(traceback.format_exc())
        
         except Exception as error:
             print(f"ERROR: An error occurred: {error}\n", traceback.format_exc())
             authLog.error(f"User {username} connected to {validDeviceIP} got an error: {error}")
             authLog.error(traceback.format_exc(),"\n")
             with open(f"failedDevices.txt","a") as failedDevices:
-                failedDevices.write(f"User {username} connected to {validDeviceIP} got an error.\n")
+                failedDevices.write(f"User {username} connected to {validDeviceIP} got an error.\n{error}\n")
+                failedDevices.write(traceback.format_exc())
