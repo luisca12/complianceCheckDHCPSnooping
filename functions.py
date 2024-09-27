@@ -80,7 +80,7 @@ def requestLogin(validIPs):
         try:
             username = input("Please enter your username: ")
             password = getpass.getpass("Please enter your password: ")
-            # execPrivPassword = getpass.getpass("Please input your enable password: ")
+            #execPrivPassword = getpass.getpass("Please input your enable password: ")
 
             for deviceIP in validIPs:
                 netDevice = {
