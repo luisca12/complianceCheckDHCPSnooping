@@ -13,7 +13,7 @@ def menuString(deviceIP, username):
         print('\t\t    Menu - Please choose an option')
         print('\t\t     Only numbers are accepted')
         print('  -------------------------------------------------------------- ')
-        print('  >\t1. To check device tracking compliance on the device   <\n')   
+        print('  >\t1. To check DHCP Snooping compliance on the device     <\n')   
         print('  >\t\t      2. Exit the program\t\t       <')
         print('  -------------------------------------------------------------- \n')
 

@@ -55,34 +55,32 @@ def complCheck(validIPs, username, netDevice):
                 'session_log_file_mode': 'append'
             }
 
-            print(f"Connecting to device {validDeviceIP}...")
+            print(f"INFO: Connecting to device {validDeviceIP}...")
+            authLog.info(f"Connecting to device {validDeviceIP}")
             with ConnectHandler(**currentNetDevice) as sshAccess:
                 try:
+                    authLog.info(f"Connected to device: {validDeviceIP}")
                     sshAccess.enable()
                     shHostnameOut = sshAccess.send_command(shHostname)
-                    authLog.info(f"User {username} successfully found the hostname {shHostnameOut}")
+                    authLog.info(f"User {username} successfully found the hostname {shHostnameOut} for device: {validDeviceIP}")
                     shHostnameOut = shHostnameOut.split(' ')[1]
                     shHostnameOut = shHostnameOut + "#"
 
                     print(f"INFO: Taking a \"{shVlanID1101}\" for device: {validDeviceIP}")
                     shVlanID1101Out = sshAccess.send_command(shVlanID1101)
                     authLog.info(f"Automation successfully ran the command:{shVlanID1101}\n{shHostnameOut}{shVlanID1101}\n{shVlanID1101Out}")
+                    shVlanID1101Out1 = re.findall(intPatt, shVlanID1101Out)
+                    authLog.info(f"The following interfaces were found under the command: {shVlanID1101}: {shVlanID1101Out1}, for device: {validDeviceIP}")
 
-                    if "not found" in shVlanID1101Out:
+                    if shVlanID1101Out1 == []:
+                        print(f"{shVlanID1101Out}\n\nFiltered interfaces:{shVlanID1101Out1}")
+                        print(f"INFO: No interfaces found under {shVlanID1101}")
+                        authLog.info(f"No interfaces found under {shVlanID1101}")
                         print(f"INFO: Device {validDeviceIP} does not have VLANS 1101 and 1103, skipping device...")
                         authLog.info(f"Device {validDeviceIP} does not have VLANS 1101 and 1103, skipping device...")
+                        # os.system("PAUSE")
                         continue
-
-                    shVlanID1101Out1 = re.findall(intPatt, shVlanID1101Out)
-                    authLog.info(f"The following interfaces were found under the command: {shVlanID1101}: {shVlanID1101Out1}")
-
-                    print(f"INFO: Taking a \"{shVlanID1103}\" for device: {validDeviceIP}")
-                    shVlanID1103Out = sshAccess.send_command(shVlanID1103)
-                    authLog.info(f"Automation successfully ran the command:{shVlanID1103}\n{shHostnameOut}{shVlanID1103}\n{shVlanID1103Out}")
-                    shVlanID1103Out1 = re.findall(intPatt, shVlanID1103Out)
-                    authLog.info(f"The following interfaces were found under the command: {shVlanID1103}: {shVlanID1103Out1}")
-
-                    if shVlanID1101Out1:
+                    else:
                         for interface in shVlanID1101Out1:
                             interface = interface.strip()
                             print(f"INFO: Checking configuration for interface {interface} on device {validDeviceIP}")
@@ -96,6 +94,8 @@ def complCheck(validIPs, username, netDevice):
                                 print(f"INFO: Interface {interface} does NOT have configured {snoopIntConfig} on device {validDeviceIP}")
                                 authLog.info(f"Interface {interface} does NOT have configured {snoopIntConfig} on device {validDeviceIP}")
                                 authLog.info(f"Skipping device {validDeviceIP}")
+                                print(f"INFO: Skipping device {validDeviceIP}")
+                                print(f"INFO: Skipping device {validDeviceIP}")
                                 missingConfig1 = True
                                 break
                         if missingConfig1 == True:
@@ -103,11 +103,22 @@ def complCheck(validIPs, username, netDevice):
                                     writer = csv.writer(file)
                                     writer.writerow([validDeviceIP])
                             continue
-                    else:
-                        print(f"INFO: No interfaces found under {shVlanID1101}")
-                        authLog.info(f"No interfaces found under {shVlanID1101}")
                     
-                    if shVlanID1103Out1:
+                    print(f"INFO: Taking a \"{shVlanID1103}\" for device: {validDeviceIP}")
+                    shVlanID1103Out = sshAccess.send_command(shVlanID1103)
+                    authLog.info(f"Automation successfully ran the command:{shVlanID1103}\n{shHostnameOut}{shVlanID1103}\n{shVlanID1103Out}")
+                    shVlanID1103Out1 = re.findall(intPatt, shVlanID1103Out)
+                    authLog.info(f"The following interfaces were found under the command: {shVlanID1103}: {shVlanID1103Out1}")
+                    
+                    if shVlanID1103Out1 == []:
+                        print(f"{shVlanID1103Out}\n\nFiltered interfaces:{shVlanID1103Out1}")
+                        print(f"INFO: No interfaces found under {shVlanID1103}")
+                        authLog.info(f"No interfaces found under {shVlanID1103}")
+                        print(f"INFO: Device {validDeviceIP} does not have VLANS 1101 and 1103, skipping device...")
+                        authLog.info(f"Device {validDeviceIP} does not have VLANS 1101 and 1103, skipping device...")
+                        # os.system("PAUSE")
+                        continue
+                    else:   
                         for interface in shVlanID1103Out1:
                             interface = interface.strip()
                             print(f"INFO: Checking configuration for interface {interface} on device {validDeviceIP}")
@@ -121,6 +132,7 @@ def complCheck(validIPs, username, netDevice):
                                 print(f"INFO: Interface {interface} does NOT have configured {snoopIntConfig} on device {validDeviceIP}")
                                 authLog.info(f"Interface {interface} does NOT have configured {snoopIntConfig} on device {validDeviceIP}")
                                 authLog.info(f"Skipping device {validDeviceIP}")
+                                print(f"INFO: Skipping device {validDeviceIP}")
                                 missingConfig1 = True
                                 break
                         if missingConfig1 == True:
@@ -128,9 +140,6 @@ def complCheck(validIPs, username, netDevice):
                                     writer = csv.writer(file)
                                     writer.writerow([validDeviceIP])
                             continue
-                    else:
-                        print(f"INFO: No interfaces found under {shVlanID1103}")
-                        authLog.info(f"No interfaces found under {shVlanID1103}")
 
                     print(f"INFO: Taking a \"{shRunDevice}\" for device: {validDeviceIP}")
                     shRunDeviceOut = sshAccess.send_command(shRunDevice)
@@ -140,6 +149,7 @@ def complCheck(validIPs, username, netDevice):
                         if not item in shRunDeviceOut:
                             authLog.info(f"Configuration: {item} is missing from device {validDeviceIP}")
                             authLog.info(f"Skipping device {validDeviceIP}")
+                            print(f"INFO: Skipping device {validDeviceIP}")
                             missingConfig1 = True
                             break
                         else:
@@ -166,6 +176,7 @@ def complCheck(validIPs, username, netDevice):
                             if snoopGenIntConfig not in interfaceOut:
                                 authLog.info(f"Configuration: {snoopGenIntConfig} is missing from device: {validDeviceIP} on interface {interface}")
                                 authLog.info(f"Skipping device {validDeviceIP}")
+                                print(f"INFO: Skipping device {validDeviceIP}")
                                 missingConfig1 = True
                                 break
                             else:    
