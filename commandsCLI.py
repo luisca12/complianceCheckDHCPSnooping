@@ -89,6 +89,7 @@ def complCheckCaremore(validIPs, username, netDevice):
                             print(f"INFO: Checking configuration for interface {interface} on device {validDeviceIP}")
                             authLog.info(f"Checking configuration for interface {interface} on device {validDeviceIP}")
                             interfaceOut = sshAccess.send_command(f'show run int {interface}')
+                            authLog.info(f"{shHostnameOut}{shVlanID1101}\n{interfaceOut}")
                             if snoopIntConfig in interfaceOut:
                                 print(f"INFO: Interface {interface} has configured {snoopIntConfig} on device {validDeviceIP}")
                                 authLog.info(f"Interface {interface} has configured {snoopIntConfig} on device {validDeviceIP}")
@@ -124,6 +125,7 @@ def complCheckCaremore(validIPs, username, netDevice):
                             print(f"INFO: Checking configuration for interface {interface} on device {validDeviceIP}")
                             authLog.info(f"Checking configuration for interface {interface} on device {validDeviceIP}")
                             interfaceOut = sshAccess.send_command(f'show run int {interface}')
+                            authLog.info(f"{shHostnameOut}{shVlanID1103}\n{interfaceOut}")
                             if snoopIntConfig in interfaceOut:
                                 print(f"INFO: Interface {interface} has configured {snoopIntConfig} on device {validDeviceIP}")
                                 authLog.info(f"Interface {interface} has configured {snoopIntConfig} on device {validDeviceIP}")
@@ -246,6 +248,7 @@ def complCheckElevance(validIPs, username, netDevice):
                             print(f"INFO: Checking configuration for interface {interface} on device {validDeviceIP}")
                             authLog.info(f"Checking configuration for interface {interface} on device {validDeviceIP}")
                             interfaceOut = sshAccess.send_command(f'show run int {interface}')
+                            authLog.info(f"{shHostnameOut}{shVlanID1105}\n{interfaceOut}")
                             if snoopIntConfig in interfaceOut:
                                 print(f"INFO: Interface {interface} has configured {snoopIntConfig} on device {validDeviceIP}")
                                 authLog.info(f"Interface {interface} has configured {snoopIntConfig} on device {validDeviceIP}")
@@ -279,6 +282,7 @@ def complCheckElevance(validIPs, username, netDevice):
                         print(f"INFO: Checking configuration for interface {interface} on device {validDeviceIP}")
                         authLog.info(f"Checking configuration for interface {interface} on device {validDeviceIP}")
                         interfaceOut = sshAccess.send_command(f'show run int {interface}')
+                        authLog.info(f"{shHostnameOut}{shVlanID1107}\n{interfaceOut}")
                         if snoopIntConfig in interfaceOut:
                             print(f"INFO: Interface {interface} has configured {snoopIntConfig} on device {validDeviceIP}")
                             authLog.info(f"Interface {interface} has configured {snoopIntConfig} on device {validDeviceIP}")
