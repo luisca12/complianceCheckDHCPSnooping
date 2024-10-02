@@ -28,3 +28,14 @@ def shRunString(validIPs):
         print(f'> Taking a show run of the device {validIPs} <')
         print('>\t   Please wait until it finishes\t  <')
         print('  ------------------------------------------------- ')
+
+def menuOrg():
+        print('  -------------------------------------------------------------- ')
+        print('\t\t    Menu - Please choose an option')
+        print('\t\t     Only numbers are accepted')
+        print('\t\t    Please choose the organization')
+        print('  -------------------------------------------------------------- ')
+        print('  >\t\t\t1. Elevance\t\t\t       <\n')   
+        print('  >\t\t\t2. Caremore\t\t\t       <\n')
+        print('  >\t\t      3. Exit the program\t\t       <')
+        print('  -------------------------------------------------------------- \n')
